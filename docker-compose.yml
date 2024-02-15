@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  express:
+    container_name: express
+    build: ./back
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./back:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - NODE_ENV=development
+
+  react:
+    container_name: react
+    build: ./front
+    ports:
+      - "80:3000"
+    volumes:
+      - ./front:/app
+      - /app/node_modules
+    depends_on:
+      - express
