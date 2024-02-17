@@ -1,4 +1,4 @@
-export const Category = {
+const Category = {
     FIRST: 'FIRST',
     SECOND: 'SECOND',
     THIRD: 'THIRD',
@@ -8,3 +8,5 @@ export const Category = {
     SEVENTH: 'SEVENTH',
     DONE: 'DONE'
 }
+
+module.exports = Category;

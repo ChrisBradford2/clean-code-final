@@ -1,4 +1,4 @@
-export class Card {
+class Card {
     constructor({id, category, question, answer, tag}) {
         this.id = id;
         this.category = category;
@@ -7,3 +7,5 @@ export class Card {
         this.tag = tag;
     }
 }
+
+module.exports = Card;
