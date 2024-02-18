@@ -7,6 +7,10 @@ const helloWorldRouter = require('./src/application/routes/helloWorld')();
 const cardsRouter = require('./src/application/routes/cards')();
 const errorMiddleware = require('./src/application/middlewares/errorMiddleware');
 const { createContainer, asClass } = require('awilix');
+const cors = require("cors");
+
+app.use(cors());
+app.use(express.json());
 
 // Dependency Injection
 const container = createContainer();
@@ -19,19 +23,12 @@ app.use((req, res, next) => {
   next();
 });
 
-// CORS Policy
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  next();
-});
-
 // Routes
 app.use('/', helloWorldRouter);
 app.use('/cards', cardsRouter);
 
 app.use(errorMiddleware);
 
-console.log('NODE_ENV:', process.env.NODE_ENV);
 if (process.env.NODE_ENV !== 'test') {
   app.listen(port, () => {
     console.log(`Listening at ${host}:${port}`);

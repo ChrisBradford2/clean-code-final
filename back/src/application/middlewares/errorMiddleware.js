@@ -8,6 +8,7 @@ module.exports = function (err, req, res, next) {
         status: err.status
     });
   } else {
+    console.error(err)
     res.sendStatus(500);
   }
 };
