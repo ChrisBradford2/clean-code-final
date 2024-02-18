@@ -1,6 +1,5 @@
 const CardUserData = require("../entities/CardUserData");
 const Card = require("../entities/Card");
-const Category = require("../entities/Category");
 const ServiceError = require('./errors/ServiceError');
 const crypto = require('crypto');
 
@@ -9,8 +8,8 @@ class CardService {
         this.storageConnector = storageConnector;
     }
 
-    getCards() {
-        return this.storageConnector.getCards();
+    getCards(tags = null) {
+        return tags?.length > 0 ? this.storageConnector.findCardsByTags(tags) : this.storageConnector.getCards();
     }
 
     addCard(cardData) {

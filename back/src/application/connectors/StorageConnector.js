@@ -16,4 +16,8 @@ module.exports = class StorageConnector {
     getCards() {
         return cards;
     }
+
+    findCardsByTags(tags) {
+        return this.getCards().filter(card => tags.includes(card.tag));
+    }
 }

@@ -5,7 +5,7 @@ const generateCards = (amount) => {
     const Card = require('../../src/domain/entities/Card');
     const cards = [];
     for (let i = 0; i < amount; i++) {
-        cards.push(new Card(i, 'How are you ?', 'I am fine'));
+        cards.push(new Card(i, 'How are you ?', 'I am fine', 'Test' + i));
     }
     return cards;
 };
@@ -40,14 +40,13 @@ describe('/cards test', () => {
 
     it('GET should return cards with provided tag', async () => {
         const response = await request(app)
-            .get('/cards?tags[0]=Test')
+            .get('/cards?tags[0]=Test0')
             .set('content-type', 'application/json')
             .send();
 
         expect(response.status).toBe(200);
-        expect(response.body.length).toBe(2);
-        expect(response.body[0].tag).toBe('Test');
-        expect(response.body[1].tag).toBe('Test');
+        expect(response.body.length).toBe(1);
+        expect(response.body[0].tag).toBe('Test0');
     });
 
     it('POST should return created card', async () => {
