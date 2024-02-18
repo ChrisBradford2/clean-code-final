@@ -1,6 +1,7 @@
 version: '3.8'
 services:
   express:
+    container_name: express
     image: 'node:20'
     ports:
       - "8080:8080"
@@ -17,6 +18,7 @@ services:
         npm start
 
   react:
+    container_name: react
     image: 'node:20'
     ports:
       - "80:3000"

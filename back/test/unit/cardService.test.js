@@ -54,4 +54,14 @@ describe('Card Service test', () => {
         expect(typeof createdCard.id).toBe('string')
         expect(createdCard.category).toBe(Category.FIRST)
     })
+
+    it('should create a card with a tag', () => {
+        const cardUserData = new CardUserData('What is the TDD ?', 'Test Driven development', 'Test')
+        const createdCard = CardService.addCard(cardUserData);
+
+        expect(createdCard).toBeInstanceOf(Card);
+        expect(typeof createdCard.id).toBe('string')
+        expect(createdCard.category).toBe(Category.FIRST)
+        expect(createdCard.tag).toBe('Test')
+    })
 });
