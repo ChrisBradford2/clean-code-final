@@ -3,7 +3,6 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 8080;
 const host = process.env.SERVER_HOST || 'http://localhost';
-const helloWorldRouter = require('./src/application/routes/helloWorld')();
 const cardsRouter = require('./src/application/routes/cards')();
 const errorMiddleware = require('./src/application/middlewares/errorMiddleware');
 const { createContainer, asClass } = require('awilix');
@@ -24,7 +23,6 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.use('/', helloWorldRouter);
 app.use('/cards', cardsRouter);
 
 app.use(errorMiddleware);
