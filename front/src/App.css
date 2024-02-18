@@ -1,42 +1,118 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+.header {
+  height: 70px;
+  padding: 8px;
+  background-color: #6ec4d0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom-right-radius: 16px;
+  border-bottom-left-radius: 16px;
+}
+
+.page-content {
+  padding: 16px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.avatar {
   text-align: center;
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+  line-height: 40px;
+  width: 40px;
+  height: 40px;
+  background-color: #3172be;
+  border-radius: 50%;
+  color: white;
 }
 
 .card {
-  padding: 2em;
+  padding: 16px;
+  background-color: #f5f5f5;
+  border-radius: 16px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.read-the-docs {
-  color: #888;
+.card-large {
+  max-width: 600px;
+}
+
+.badge {
+  padding: 4px 8px;
+  background-color: #6ec4d0;
+  color: white;
+  border-radius: 8px;
+  height: fit-content;
+}
+
+.flex {
+  display: flex;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.gap-8 {
+  gap: 8px;
+}
+
+.gap-16 {
+  gap: 16px;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-align-end {
+  align-items: flex-end;
+}
+
+.mt-8 {
+  margin-top: 8px;
+}
+
+.mb-8 {
+  margin-bottom: 8px;
+}
+
+.mb-32 {
+  margin-bottom: 32px;
+}
+
+.error {
+  color: #d23232;
+}
+
+input {
+  border-radius: 8px;
+  border: 1px solid #d5d5d5;
+  width: 100%;
+  height: 30px;
+}
+
+h1 {
+  font-size: 24px;
+  margin: 0;
+}
+
+h2 {
+  font-size: 20px;
+  margin: 0;
+}
+
+h3 {
+  font-size: 16px;
+  margin: 0;
 }
