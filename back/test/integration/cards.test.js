@@ -38,6 +38,18 @@ describe('/cards test', () => {
         expect(response.body[0]).toHaveProperty('tag');
     });
 
+    it('GET should return cards with provided tag', async () => {
+        const response = await request(app)
+            .get('/cards?tags[0]=Test')
+            .set('content-type', 'application/json')
+            .send();
+
+        expect(response.status).toBe(200);
+        expect(response.body.length).toBe(2);
+        expect(response.body[0].tag).toBe('Test');
+        expect(response.body[1].tag).toBe('Test');
+    });
+
     it('POST should return created card', async () => {
         const payload = {
             question: 'What is testing ?',

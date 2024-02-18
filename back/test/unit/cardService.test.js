@@ -47,6 +47,38 @@ describe('Card Service test', () => {
         expect(cards).toHaveLength(2);
     });
 
+    it('should return array with cards corresponding to tag', () => {
+        const cards = [
+            new Card(1, 'How are you ?', 'I am fine', 'Test'),
+            new Card(2, 'How are you ?', 'I am fine', 'Test'),
+            new Card(3, 'How are you ?', 'I am fine', 'Test2'),
+        ];
+        jest.spyOn(storageConnector, "getCards").mockReturnValue(cards);
+
+        const cardsWithTag = CardService.getCards(['Test']);
+        expect(cardsWithTag).toBeInstanceOf(Array);
+        expect(cardsWithTag).toHaveLength(2);
+        expect(cardsWithTag[0].tag).toBe('Test');
+        expect(cardsWithTag[1].tag).toBe('Test');
+    });
+
+    it('should return array with cards corresponding to multiple tags', () => {
+        const cards = [
+            new Card('1', 'How are you ?', 'I am fine', 'Test'),
+            new Card('2', 'How are you ?', 'I am fine', 'Test'),
+            new Card('3', 'How are you ?', 'I am fine', 'Test2'),
+            new Card('4', 'How are you ?', 'I am fine', 'Test3'),
+        ];
+        jest.spyOn(storageConnector, "getCards").mockReturnValue(cards);
+
+        const cardsWithTag = CardService.getCards(['Test', 'Test2']);
+        expect(cardsWithTag).toBeInstanceOf(Array);
+        expect(cardsWithTag).toHaveLength(3);
+        expect(cardsWithTag[0].tag).toBe('Test');
+        expect(cardsWithTag[1].tag).toBe('Test');
+        expect(cardsWithTag[2].tag).toBe('Test2');
+    });
+
     it('should create a card without tag', () => {
         const cardUserData = new CardUserData('What is the TDD ?', 'Test Driven development')
         const createdCard = CardService.addCard(cardUserData);
