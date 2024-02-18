@@ -37,4 +37,27 @@ describe('/cards test', () => {
         expect(response.body[0]).toHaveProperty('answer');
         expect(response.body[0]).toHaveProperty('tag');
     });
+
+    it('POST should return created card', async () => {
+        const payload = {
+            question: 'What is testing ?',
+            answer: 'A way to insure your app stability',
+            tag: 'Test',
+        };
+
+        const response = await request(app)
+            .post('/cards')
+            .set('Content-Type', 'application/json')
+            .send(payload);
+
+        expect(response.status).toBe(201);
+        expect(response.body).toHaveProperty('id');
+        expect(response.body).toHaveProperty('category');
+        expect(response.body).toHaveProperty('question');
+        expect(response.body).toHaveProperty('answer');
+        expect(response.body).toHaveProperty('tag');
+        expect(response.body.question).toBe(payload.question);
+        expect(response.body.answer).toBe(payload.answer);
+        expect(response.body.tag).toBe(payload.tag);
+    });
 });

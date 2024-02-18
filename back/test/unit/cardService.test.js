@@ -2,6 +2,8 @@ const storageConnector = new (require('../../src/application/connectors/StorageC
 const CardServiceClass = require('../../src/domain/services/CardService').CardService;
 const CardService = new CardServiceClass({ storageConnector });
 const Card = require('../../src/domain/entities/Card');
+const CardUserData = require('../../src/domain/entities/CardUserData');
+const Category = require("../../src/domain/entities/Category");
 
 const generateCards = (amount) => {
     const cards = [];
@@ -12,6 +14,14 @@ const generateCards = (amount) => {
 }
 
 describe('Card Service test', () => {
+    beforeEach(() => {
+        jest.spyOn(storageConnector, "addCard").mockImplementation((card) => card);
+    });
+
+    afterEach(() => {
+        jest.clearAllMocks();
+    })
+
     it('should return empty array', () => {
         jest.spyOn(storageConnector, "getCards").mockReturnValue([]);
 
@@ -35,4 +45,13 @@ describe('Card Service test', () => {
         expect(cards).toBeInstanceOf(Array);
         expect(cards).toHaveLength(2);
     });
+
+    it('should create a card without tag', () => {
+        const cardUserData = new CardUserData('What is the TDD ?', 'Test Driven development')
+        const createdCard = CardService.addCard(cardUserData);
+
+        expect(createdCard).toBeInstanceOf(Card);
+        expect(typeof createdCard.id).toBe('string')
+        expect(createdCard.category).toBe(Category.FIRST)
+    })
 });
