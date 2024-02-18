@@ -5,9 +5,16 @@ import {Card} from "../entities/Card";
 const useCardsService = () => {
     const api = useApi();
     return {
-        getCollection: (): Promise<Card[]> => api(`cards`, {
-            method: 'GET',
-        }),
+        getCollection: (tags: string[] = []): Promise<Card[]> => {
+            let query = '';
+            if (tags.length) {
+                query = `?tags=${tags.join(',')}`;
+            }
+
+            return api(`cards${query}`, {
+                method: 'GET',
+            });
+        },
         post: (body: CardUserData): Promise<Card> => api(`cards`, {
             method: 'POST',
             body,
