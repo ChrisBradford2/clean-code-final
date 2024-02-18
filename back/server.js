@@ -6,7 +6,7 @@ const host = process.env.SERVER_HOST || 'http://localhost';
 const helloWorldRouter = require('./src/application/routes/helloWorld')();
 const cardsRouter = require('./src/application/routes/cards')();
 const errorMiddleware = require('./src/application/middlewares/errorMiddleware');
-const { createContainer, asClass, asValue, Lifetime } = require('awilix');
+const { createContainer, asClass } = require('awilix');
 
 // Dependency Injection
 const container = createContainer();
