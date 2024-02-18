@@ -60,4 +60,18 @@ describe('/cards test', () => {
         expect(response.body.answer).toBe(payload.answer);
         expect(response.body.tag).toBe(payload.tag);
     });
+
+    it('POST should return 422', async () => {
+        const payload = {
+            answer: 'A way to insure your app stability',
+            tag: 'Test',
+        };
+
+        const response = await request(app)
+            .post('/cards')
+            .set('Content-Type', 'application/json')
+            .send(payload);
+
+        expect(response.status).toBe(422);
+    });
 });
