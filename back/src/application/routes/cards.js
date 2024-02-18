@@ -12,7 +12,6 @@ module.exports = () => {
     });
 
     router.post("/", (req, res) => {
-        console.log(req.body)
         const CardService = req.container.resolve(cardServiceContainer);
         const cardUserData = postCardRequest(req.body);
         const createdCard = CardService.addCard(cardUserData);

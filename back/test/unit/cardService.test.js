@@ -4,6 +4,7 @@ const CardService = new CardServiceClass({ storageConnector });
 const Card = require('../../src/domain/entities/Card');
 const CardUserData = require('../../src/domain/entities/CardUserData');
 const Category = require("../../src/domain/entities/Category");
+const ServiceError = require("../../src/domain/services/errors/ServiceError");
 
 const generateCards = (amount) => {
     const cards = [];
@@ -53,15 +54,19 @@ describe('Card Service test', () => {
         expect(createdCard).toBeInstanceOf(Card);
         expect(typeof createdCard.id).toBe('string')
         expect(createdCard.category).toBe(Category.FIRST)
-    })
+    });
 
     it('should create a card with a tag', () => {
-        const cardUserData = new CardUserData('What is the TDD ?', 'Test Driven development', 'Test')
+        const cardUserData = new CardUserData('What is the TDD ?', 'Test Driven development', 'Test');
         const createdCard = CardService.addCard(cardUserData);
 
         expect(createdCard).toBeInstanceOf(Card);
-        expect(typeof createdCard.id).toBe('string')
-        expect(createdCard.category).toBe(Category.FIRST)
-        expect(createdCard.tag).toBe('Test')
-    })
+        expect(typeof createdCard.id).toBe('string');
+        expect(createdCard.category).toBe(Category.FIRST);
+        expect(createdCard.tag).toBe('Test');
+    });
+
+    it('create should throw an error', () => {
+        expect(() => CardService.addCard('dummy data')).toThrowError(ServiceError);
+    });
 });
