@@ -17,7 +17,7 @@ class CardService {
         if (!(cardData instanceof CardUserData)) {
             throw new ServiceError('Card must be a CardUserData entity');
         }
-        const newCard = new Card(crypto.randomUUID(), cardData.question, cardData.answer, Category.FIRST, cardData.tag);
+        const newCard = new Card(crypto.randomUUID(), cardData.question, cardData.answer, cardData.tag);
         return this.storageConnector.addCard(newCard);
     }
 }

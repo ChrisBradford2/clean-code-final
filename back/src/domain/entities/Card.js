@@ -1,7 +1,7 @@
 const Category = require('./Category');
 
 class Card {
-    constructor(id, question, answer, category = Category.FIRST, tag = null) {
+    constructor(id, question, answer, tag = null, category = Category.FIRST) {
         this.id = id;
         this.category = category;
         this.question = question;
