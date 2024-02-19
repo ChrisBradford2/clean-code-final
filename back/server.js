@@ -15,7 +15,7 @@ app.use(express.json());
 const container = createContainer();
 container.register({
   cardService: asClass(require('./src/domain/services/CardService').CardService),
-  storageConnector: asClass(require('./src/application/connectors/storageConnector')).singleton(),
+  storageConnector: asClass(require('./src/application/connectors/StorageConnector')).singleton(),
 });
 app.use((req, res, next) => {
   req.container = container.createScope();
