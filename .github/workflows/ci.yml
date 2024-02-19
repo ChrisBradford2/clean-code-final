@@ -39,10 +39,6 @@ jobs:
           exit 1
         fi
 
-    - name: List Backend Application Connectors
-      run: |
-        ls -la back/src/application/connectors/
-
     - name: Run Jest Tests
       run: |
         cd back
