@@ -1,10 +1,17 @@
 name: Lint Check
 
-on: [push, pull_request]
+on:
+  pull_request:
+    branches:
+        - '*'
+        - '!master'
+  push:
+    branches:
+      - master
 
 jobs:
-  lint-backend:
-    name: Lint Backend
+  backend:
+    name: Backend
     runs-on: ubuntu-latest
 
     steps:
@@ -32,8 +39,13 @@ jobs:
           exit 1
         fi
 
-  lint-frontend:
-    name: Lint Frontend
+    - name: Run Jest Tests
+      run: |
+        cd back
+        npm test
+
+  frontend:
+    name: Frontend
     runs-on: ubuntu-latest
 
     steps:
