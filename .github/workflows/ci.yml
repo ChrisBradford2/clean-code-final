@@ -1,6 +1,13 @@
 name: Lint Check
 
-on: [push, pull_request]
+on:
+  pull_request:
+    branches:
+        - '*'
+        - '!master'
+  push:
+    branches:
+      - master
 
 jobs:
   backend:
@@ -31,6 +38,11 @@ jobs:
           echo -e "\033[31mESLint errors detected.\033[0m"
           exit 1
         fi
+
+    - name: List Backend Application Connectors
+      run: |
+        ls -la back/src/application/connectors/
+
     - name: Run Jest Tests
       run: |
         cd back
@@ -67,7 +79,7 @@ jobs:
     - name: Run Cypress Tests
       uses: cypress-io/github-action@v6.5.0
       with:
-        start: npm start
+        start: npm run dev
         wait-on: 'http://localhost:3000'
         command-prefix: 'npx cypress run'
         working-directory: 'front'
