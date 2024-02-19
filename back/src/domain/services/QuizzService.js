@@ -1,11 +1,36 @@
-class QuizzService {
-  constructor({ storageConnector }) {
-    this.storageConnector = storageConnector;
-  }
+const CategoryFrequency = require('../entities/CategoryFrequency');
+const Category = require('../entities/Category');
+const moment = require("moment");
 
-  getQuizz() {
-    return this.storageConnector.getCards();
-  }
+class QuizzService {
+    constructor({storageConnector}) {
+        this.storageConnector = storageConnector;
+    }
+
+    getQuizz(date) {
+        let cards = this.storageConnector.getCards();
+
+        cards = cards.filter(card => {
+            if (!card.lastAnsweredDate) {
+                return true;
+            }
+
+            const daysToAdd = CategoryFrequency[card.category];
+            const nextDateToAnswer = moment(card.lastAnsweredDate).add(daysToAdd, 'days');
+
+
+            if (
+                card.category === Category.FIRST &&
+                nextDateToAnswer.isSameOrBefore(date)
+            ) {
+                return true;
+            }
+
+            return false;
+        });
+
+        return cards;
+    }
 }
 
 module.exports = {
