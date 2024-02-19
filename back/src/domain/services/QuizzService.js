@@ -1,5 +1,4 @@
 const CategoryFrequency = require('../entities/CategoryFrequency');
-const Category = require('../entities/Category');
 const moment = require("moment");
 
 class QuizzService {
@@ -9,34 +8,17 @@ class QuizzService {
 
     getQuizz(date) {
         let cards = this.storageConnector.getCards();
+        return cards.filter(card => this.shouldIncludeCard(card, date));
+    }
 
-        cards = cards.filter(card => {
-            if (!card.lastAnsweredDate) {
-                return true;
-            }
+    shouldIncludeCard(card, currentDate) {
+        if (!card.lastAnsweredDate) {
+            return true;
+        }
 
-            const daysToAdd = CategoryFrequency[card.category];
-            const nextDateToAnswer = moment(card.lastAnsweredDate).add(daysToAdd, 'days');
-
-
-            if (
-                card.category === Category.FIRST &&
-                nextDateToAnswer.isSameOrBefore(date)
-            ) {
-                return true;
-            }
-
-            if (
-                card.category === Category.SECOND &&
-                nextDateToAnswer.isSameOrBefore(date)
-            ) {
-                return true;
-            }
-
-            return false;
-        });
-
-        return cards;
+        const daysToAdd = CategoryFrequency[card.category];
+        const nextDateToAnswer = moment(card.lastAnsweredDate).add(daysToAdd, 'days');
+        return nextDateToAnswer.isSameOrBefore(currentDate);
     }
 }
 
