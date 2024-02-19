@@ -5,7 +5,7 @@ import CardTile from "../components/CardTile";
 import CardForm from "../components/CardForm";
 import Chips from "../components/Chips";
 
-// eslint-disable react-hooks/exhaustive-deps
+/* eslint-disable react-hooks/exhaustive-deps */
 
 export default function CardsList() {
     const [cards, setCards] = useState<Card[]>([]);
