@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
-import useCardsService from "../domain/services/useCardsService.js";
-import {Card} from "../domain/types/Card.ts";
+import useCardsService from "../utils/requests/useCardsService.js";
+import {Card} from "../utils/types/Card.ts";
 import CardTile from "../components/CardTile";
 import CardForm from "../components/CardForm";
 import Chips from "../components/Chips";

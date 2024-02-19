@@ -1,4 +1,4 @@
-import {Card} from "../domain/types/Card.ts";
+import {Card} from "../utils/types/Card.ts";
 
 export default function CardTile({
     card

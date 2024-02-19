@@ -1,6 +1,6 @@
-import {CardUserData} from "../domain/types/CardUserData.ts";
+import {CardUserData} from "../utils/types/CardUserData.ts";
 import {useState} from "react";
-import useCardsService from "../domain/services/useCardsService";
+import useCardsService from "../utils/requests/useCardsService";
 
 export default function CardForm({
     onNewCard
