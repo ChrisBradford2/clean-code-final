@@ -26,6 +26,13 @@ class QuizzService {
                 return true;
             }
 
+            if (
+                card.category === Category.SECOND &&
+                nextDateToAnswer.isSameOrBefore(date)
+            ) {
+                return true;
+            }
+
             return false;
         });
 
