@@ -2,33 +2,29 @@ import useApi from './useApi';
 import { CardUserData } from "../types/CardUserData";
 import { Card } from "../types/Card";
 
-const useCardsService = () => {
-    const cardAdapter = (data: any): Card => ({
-        id: data.id,
-        category: data.category,
-        question: data.question,
-        answer: data.answer,
-        tag: data.tag,
-    });
+const buildQueryWithTags = (tags: string[]): string => tags.length ? `?tags=${tags.join(',')}` : '';
 
+const adaptCardData = (card: Card): Card => ({
+    id: card.id,
+    category: card.category,
+    question: card.question,
+    answer: card.answer,
+    tag: card.tag,
+});
+
+const useCardsService = () => {
     const api = useApi();
 
     return {
         getCollection: async (tags: string[] = []): Promise<Card[]> => {
-            let query = '';
-            if (tags.length) {
-                query = `?tags=${tags.join(',')}`;
-            }
-
-            const data = await api(`cards${query}`, {
-                method: 'GET',
-            });
-            return data.map(cardAdapter);
+            const query = buildQueryWithTags(tags);
+            const data = await api(`cards${query}`, { method: 'GET' });
+            return data.map(adaptCardData);
         },
-        post: (body: CardUserData): Promise<Card> => api(`cards`, {
+        post: (body: CardUserData): Promise<Card> => api('cards', {
             method: 'POST',
             body,
-        }).then(cardAdapter),
+        }).then(adaptCardData),
     };
 };
 
