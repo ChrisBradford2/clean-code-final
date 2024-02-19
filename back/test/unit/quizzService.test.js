@@ -66,4 +66,17 @@ describe('Quizz Service test', () => {
         expect(cards).toBeInstanceOf(Array);
         expect(cards).toHaveLength(1);
     });
+
+    it('should return cards of category SECOND', () => {
+        const today = new Date('2021-01-02');
+        const twoDaysBefore = new Date('2020-12-31');
+
+        jest.spyOn(storageConnector, "getCards").mockReturnValue([
+            new Card('1', 'How are you ?', 'I am fine', null, Category.SECOND, twoDaysBefore),
+        ]);
+
+        const cards = QuizzService.getQuizz(today);
+        expect(cards).toBeInstanceOf(Array);
+        expect(cards).toHaveLength(1);
+    });
 });
