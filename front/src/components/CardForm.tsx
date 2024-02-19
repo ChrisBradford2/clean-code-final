@@ -1,4 +1,4 @@
-import {CardUserData} from "../domain/entities/CardUserData";
+import {CardUserData} from "../domain/types/CardUserData.ts";
 import {useState} from "react";
 import useCardsService from "../domain/services/useCardsService";
 

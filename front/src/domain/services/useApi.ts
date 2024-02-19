@@ -1,7 +1,9 @@
+type Adapter<T> = (data: any) => T;
+
 const useApi = () => {
     const baseUrl = "http://localhost:8080";
 
-    return (url: string, options: any = {}) => {
+    return async <T>(url: string, options: any = {}, adapter?: Adapter<T>) => {
         const headers = {
             ...options.headers,
         };
@@ -18,20 +20,19 @@ const useApi = () => {
             options.body = JSON.stringify(options.body);
         }
 
-        return fetch(`${baseUrl}/${url}`, {...options, headers}).then(response => {
-            if (response.ok) {
-                // check if it's a 204 response
-                if (response.status === 204) {
-                    return;
-                }
-
-                return response.json();
+        const response = await fetch(`${baseUrl}/${url}`, {...options, headers});
+        if (response.ok) {
+            // check if it's a 204 response
+            if (response.status === 204) {
+                return;
             }
 
-            return response.json().then(error => {
-                throw new Error(error.detail ?? response.statusText ?? "An error occurred");
+            return response.json().then(data_1 => {
+                return adapter ? adapter(data_1) : data_1;
             });
-        });
+        }
+        const error = await response.json();
+        throw new Error(error.detail ?? response.statusText ?? "An error occurred");
     }
 };
 
