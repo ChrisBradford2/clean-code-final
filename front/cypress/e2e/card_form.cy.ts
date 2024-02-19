@@ -1,3 +1,23 @@
+const values = [
+  {
+    question: 'How to create a new React app?',
+    answer: 'npx create-react-app my-app',
+    tag: 'programming'
+  },
+  {
+    question: 'What is the capital of France?',
+    answer: 'Paris',
+    tag: 'geography'
+  },
+  {
+    question: "Who is the author of Harry Potter?",
+    answer: "J.K. Rowling",
+    tag: "literature"
+  }
+]
+
+const randomValue = values[Math.floor(Math.random() * values.length)];
+
 describe('CardForm', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000/cards');
@@ -11,13 +31,13 @@ describe('CardForm', () => {
   });
 
   it('should update the state when inputs change', () => {
-    cy.get('input[placeholder="Question"]').type('What is your name?');
-    cy.get('input[placeholder="Réponse"]').type('My name is John doe.');
-    cy.get('input[placeholder="Tag"]').type('programming');
+    cy.get('input[placeholder="Question"]').type(randomValue.question);
+    cy.get('input[placeholder="Réponse"]').type(randomValue.answer);
+    cy.get('input[placeholder="Tag"]').type(randomValue.tag);
 
-    cy.get('input[placeholder="Question"]').should('have.value', 'What is your name?');
-    cy.get('input[placeholder="Réponse"]').should('have.value', 'My name is John doe.');
-    cy.get('input[placeholder="Tag"]').should('have.value', 'programming');
+    cy.get('input[placeholder="Question"]').should('have.value', randomValue.question);
+    cy.get('input[placeholder="Réponse"]').should('have.value', randomValue.answer);
+    cy.get('input[placeholder="Tag"]').should('have.value', randomValue.tag);
   });
 
   it('should display error messages when form is submitted with empty inputs', () => {
@@ -28,16 +48,16 @@ describe('CardForm', () => {
   });
 
   it('should call onNewCard when form is submitted with valid inputs', () => {
-    cy.get('input[placeholder="Question"]').type('What is your name?');
-    cy.get('input[placeholder="Réponse"]').type('My name is John doe.');
-    cy.get('input[placeholder="Tag"]').type('programming');
+    cy.get('input[placeholder="Question"]').type(randomValue.question);
+    cy.get('input[placeholder="Réponse"]').type(randomValue.answer);
+    cy.get('input[placeholder="Tag"]').type(randomValue.tag);
 
     cy.get('button').contains('Ajouter').click();
   });
 
   it('should see a new card when form is submitted with valid inputs', () => {
-    cy.get('div').contains('What is your name?').should('exist');
-    cy.get('div').contains('My name is John doe.').should('exist');
-    cy.get('div').contains('programming').should('exist');
+    cy.get('div').contains(randomValue.question).should('exist');
+    cy.get('div').contains(randomValue.answer).should('exist');
+    cy.get('div').contains(randomValue.tag).should('exist');
   });
 });
