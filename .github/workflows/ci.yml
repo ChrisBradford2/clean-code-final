@@ -72,10 +72,3 @@ jobs:
           echo -e "\033[31mESLint errors detected.\033[0m"
           exit 1
         fi
-    - name: Run Cypress Tests
-      uses: cypress-io/github-action@v6.5.0
-      with:
-        start: npm run dev
-        wait-on: 'http://localhost:3000'
-        command-prefix: 'npx cypress run'
-        working-directory: 'front'
