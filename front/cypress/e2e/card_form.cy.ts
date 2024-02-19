@@ -34,4 +34,10 @@ describe('CardForm', () => {
 
     cy.get('button').contains('Ajouter').click();
   });
+
+  it('should see a new card when form is submitted with valid inputs', () => {
+    cy.get('div').contains('What is your name?').should('exist');
+    cy.get('div').contains('My name is John doe.').should('exist');
+    cy.get('div').contains('programming').should('exist');
+  });
 });
