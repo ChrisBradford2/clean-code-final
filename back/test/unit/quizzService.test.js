@@ -110,16 +110,16 @@ describe('Quizz Service test', () => {
     it('should return cards of category FIFTH OR SECOND OR FIRST', () => {
         const today = new Date('2021-01-02');
         const twoDaysBefore = new Date('2020-12-31');
-        const fiveDaysBefore = new Date('2020-12-28');
+        const sixteenDaysBefore = new Date('2020-12-17');
         const yesterday = new Date('2021-01-01');
-        const tenDaysBefore = new Date('2020-12-23');
+        const onMonthBefore = new Date('2020-12-02');
 
         const cardsExpected = [
-            new Card('1', 'How are you ?', 'I am fine', null, Category.FIFTH, tenDaysBefore),
-            new Card('2', 'How are you ?', 'I am fine', null, Category.FIFTH, fiveDaysBefore),
+            new Card('1', 'How are you ?', 'I am fine', null, Category.FIFTH, sixteenDaysBefore),
+            new Card('2', 'How are you ?', 'I am fine', null, Category.FIFTH, onMonthBefore),
             new Card('3', 'How are you ?', 'I am fine', null, Category.SECOND, twoDaysBefore),
             new Card('4', 'How are you ?', 'I am fine', null, Category.FIRST, yesterday),
-            new Card('5', 'How are you ?', 'I am fine', null, Category.FIRST, tenDaysBefore),
+            new Card('5', 'How are you ?', 'I am fine', null, Category.FIRST, sixteenDaysBefore),
         ];
 
         const cardsNotExpected = [
@@ -127,6 +127,7 @@ describe('Quizz Service test', () => {
             new Card('12', 'How are you ?', 'I am fine', null, Category.FIFTH, twoDaysBefore),
             new Card('13', 'How are you ?', 'I am fine', null, Category.SECOND, today),
             new Card('14', 'How are you ?', 'I am fine', null, Category.SECOND, yesterday),
+            new Card('15', 'How are you ?', 'I am fine', null, Category.FIFTH, today),
         ];
 
         jest.spyOn(storageConnector, "getCards").mockReturnValue([...cardsExpected, ...cardsNotExpected]);
