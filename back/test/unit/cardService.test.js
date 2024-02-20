@@ -117,4 +117,18 @@ describe('Card Service test', () => {
         expect(updatedCard.category).toBe(Category.SECOND);
         expect(updatedCard.lastAnsweredDate.getDate()).toBe(today.getDate());
     });
+
+    it('answerCard should update category to FIRST and lastAnsweredDate', () => {
+        const twoDaysBefore = moment().subtract(2, 'days').toDate();
+        const today = moment().toDate();
+
+        const card = new Card('1', 'How are you ?', 'I am fine', 'Test', Category.SECOND, twoDaysBefore);
+        jest.spyOn(storageConnector, "getCards").mockReturnValue([card]);
+
+        const updatedCard = CardService.answerCard(card, false);
+
+        expect(updatedCard).toBeInstanceOf(Card);
+        expect(updatedCard.category).toBe(Category.FIRST);
+        expect(updatedCard.lastAnsweredDate.getDate()).toBe(today.getDate());
+    });
 });
