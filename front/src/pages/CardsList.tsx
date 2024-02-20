@@ -38,7 +38,7 @@ export default function CardsList() {
             {loading && <p>Chargement en cours...</p>}
             <div className="flex gap-16 flex-wrap">
                 <CardForm onNewCard={() => loadCards(tags)}/>
-                {cards.map(card => <CardTile key={card.id} card={card}/>)}
+                {cards.map(card => <CardTile key={card.id} card={card} mustRespond={false} />)}
             </div>
         </>
     )
