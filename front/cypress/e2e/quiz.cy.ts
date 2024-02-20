@@ -12,7 +12,22 @@ Cypress.Commands.add('addCard', (value) => {
   cy.get('input[placeholder="Tag"]').type(value.tag);
 });
 
-describe('Quiz', () => {
+/**
+ * Fonctionnalité: Création de fiches intégrées dans le système
+ * Contexte: Étant donné que l'utilisateur est connecté à son compte
+ * Scénario: Création d'une fiche en catégorie 1
+ * Quand l'utilisateur accède à la page de création de fiche
+ * Et qu'il remplit les champs obligatoires suivants :
+ * | Champ    | Valeur                  |
+ * | question | Qu'est ce que le TDD ?  |
+ * | answer   | Test Driven Development |
+ * | tag?     | Testing                 |
+ * Et qu'il clique sur le bouton de création
+ * Alors la fiche devrait être enregistrée dans le système
+ * Et la fiche devrait être associée à la catégorie 1
+ * Et l'utilisateur devrait voir un message de confirmation de création de fiche
+ */
+describe('Create a new card', () => {
   it('should render the form inputs', () => {
     cy.visit('http://localhost:3000/cards');
     cy.get('input[placeholder="Question"]').should('exist');
@@ -47,7 +62,20 @@ describe('Quiz', () => {
     cy.get('div').contains(value.answer).should('exist');
     cy.get('div').contains(value.tag).should('exist');
   });
+});
 
+/**
+ * Fonctionnalité: Répondre à une fiche
+ * Contexte: Étant donné que l'utilisateur est connecté à son compte
+ * Scénario: Répondre à une fiche
+ * Quand l'utilisateur accède à la page de révision
+ * Et qu'il répond à une fiche
+ * Alors le système devrait lui indiquer si sa réponse est correcte ou non
+ * Et le système devrait lui indiquer la réponse attendue si sa réponse est incorrecte
+ * Et le système devrait lui indiquer la réponse qu'il a donnée si sa réponse est incorrecte
+ * Et l'utilisateur devrait pouvoir passer à la question suivante
+ */
+describe('Respond to a card', () => {
   it("should display 'Mauvaise réponse' message when the answer is incorrect", () => {
     cy.visit("http://localhost:3000");
     cy.get("input").type("Je ne sais pas :(");
