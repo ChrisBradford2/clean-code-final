@@ -2,6 +2,7 @@
 
 - Clone the repository and go to the main directory
 - Run `docker compose up -d` to start the server
+- Wait for the containers to be built and started, it may take a few seconds to one minute to be launched and available on ports. Check containers logs to see when they are ready.
 
 You'll have access to the frontend at `http://localhost:80` and the backend at `http://localhost:8080`
 
