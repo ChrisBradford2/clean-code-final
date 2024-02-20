@@ -9,6 +9,7 @@ You'll have access to the frontend at `http://localhost:80` and the backend at `
 
 - run `docker exec express npm run test` to execute the tests
 - run `docker exec express npm run test:coverage` to execute tests with a coverage report
+- run `docker exec react npm test` to execute the Cypress tests
 
 # Bonus faits
 1. Respect du délai théorique entre les propositions des cartes selon la date de dernière réponse et la catégorie
