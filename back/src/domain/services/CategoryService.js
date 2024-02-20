@@ -17,4 +17,4 @@ class CategoryService {
     }
 }
 
-module.exports = {CategoryService};
+module.exports = CategoryService;
