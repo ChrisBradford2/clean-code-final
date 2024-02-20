@@ -1,5 +1,5 @@
-module.exports = (query) => {
+module.exports = (req) => {
     return {
-        tags: query.tags ?? null,
+        tags: req.query.tags ?? null,
     }
 }
