@@ -1,7 +1,8 @@
 const CardUserData = require("../entities/CardUserData");
 const Card = require("../entities/Card");
 const ServiceError = require('./errors/ServiceError');
-const crypto = require('crypto');
+const Category = require("../entities/Category");
+const CategoryService = new (require('./CategoryService'));
 
 class CardService {
     constructor({ storageConnector }) {
@@ -16,8 +17,32 @@ class CardService {
         if (!(cardData instanceof CardUserData)) {
             throw new ServiceError('Card must be a CardUserData entity');
         }
-        const newCard = new Card(crypto.randomUUID(), cardData.question, cardData.answer, cardData.tag);
-        return this.storageConnector.addCard(newCard);
+        return this.storageConnector.addCard(cardData);
+    }
+
+    findCardById(id) {
+        return this.storageConnector.findCardById(id);
+    }
+
+    answerCard(card, isValid) {
+        if (!(card instanceof Card)) {
+            throw new ServiceError('Card must be a Card entity');
+        }
+
+        const cardToSave = isValid ? this.markCardAsValid(card) : this.markCardAsInvalid(card);
+        return this.storageConnector.updateCard(cardToSave);
+    }
+
+    markCardAsValid(card) {
+        card.category = CategoryService.getNextCategoryFrom(card.category);
+        card.lastAnsweredDate = new Date();
+        return card;
+    }
+
+    markCardAsInvalid(card) {
+        card.category = Category.FIRST;
+        card.lastAnsweredDate = new Date();
+        return card;
     }
 }
 
