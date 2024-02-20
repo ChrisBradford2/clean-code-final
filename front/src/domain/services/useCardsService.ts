@@ -21,7 +21,11 @@ const useCardsService = () => {
         post: (body: CardUserData): Promise<Card> => api(`cards`, {
             method: 'POST',
             body: JSON.stringify(body),
-        })
+        }),
+        answer: (id: string, isValid: boolean): Promise<Card> => api(`cards/${id}/answer`, {
+            method: 'PATCH',
+            body: JSON.stringify({isValid}),
+        }),
     };
 };
 

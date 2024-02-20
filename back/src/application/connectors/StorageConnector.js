@@ -22,7 +22,10 @@ module.exports = class StorageConnector {
     }
 
     findCardsByTags(tags) {
-        return this.getCards().filter(card => tags.includes(card.tag));
+        return this.getCards().filter(card =>
+            card.tag &&
+            tags.map(tag => tag.toLowerCase()).includes(card.tag.toLowerCase())
+        );
     }
 
     findCardById(id) {

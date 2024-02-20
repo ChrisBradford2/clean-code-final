@@ -4,9 +4,9 @@ const {cardServiceContainer} = require("../../domain/services/CardService");
 const Category = require("../../domain/entities/Category");
 
 module.exports = (req) => {
-    const {query, body} = req;
+    const {params, body} = req;
 
-    if (!query.id || typeof query.id !== 'string') {
+    if (!params.id || typeof params.id !== 'string') {
         throw new ForbiddenError('Id is required and must be a string')
     }
 
@@ -19,7 +19,7 @@ module.exports = (req) => {
     }
 
     const CardService = req.container.resolve(cardServiceContainer);
-    const card = CardService.findCardById(query.id);
+    const card = CardService.findCardById(params.id);
     if (!card) {
         throw new NotFoundError('Card not found')
     }
