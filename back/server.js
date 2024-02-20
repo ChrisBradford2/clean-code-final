@@ -15,6 +15,7 @@ app.use(express.json());
 const container = createContainer();
 container.register({
   cardService: asClass(require('./src/domain/services/CardService').CardService),
+  quizzService: asClass(require('./src/domain/services/QuizzService').QuizzService),
   storageConnector: asClass(require('./src/application/connectors/StorageConnector')).singleton(),
 });
 app.use((req, res, next) => {
