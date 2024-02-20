@@ -1,37 +1,29 @@
 const useApi = () => {
     const baseUrl = "http://localhost:8080";
 
-    return (url: string, options: any = {}) => {
-        const headers = {
-            ...options.headers,
-        };
+    return async (url: string, options: RequestInit = {}) => {
 
         const type = 'application/json';
-        if (!headers['Content-Type']) {
-            headers['Content-Type'] = type;
-        }
-        if (!headers['Accept']) {
-            headers['Accept'] = type;
-        }
+        const headers = new Headers(options.headers);
+        headers.set('Content-Type', type);
+        headers.set('Accept', type);
+
 
         if (options.body && typeof options.body !== 'string') {
             options.body = JSON.stringify(options.body);
         }
 
-        return fetch(`${baseUrl}/${url}`, {...options, headers}).then(response => {
-            if (response.ok) {
-                // check if it's a 204 response
-                if (response.status === 204) {
-                    return;
-                }
-
-                return response.json();
+        const response = await fetch(`${baseUrl}/${url}`, {...options, headers});
+        if (response.ok) {
+            // check if it's a 204 response
+            if (response.status === 204) {
+                return;
             }
 
-            return response.json().then(error => {
-                throw new Error(error.detail ?? response.statusText ?? "An error occurred");
-            });
-        });
+            return response.json();
+        }
+        const error = await response.json();
+        throw new Error(error.detail ?? response.statusText ?? "An error occurred");
     }
 };
 
