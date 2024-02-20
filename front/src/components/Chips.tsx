@@ -6,6 +6,7 @@ export default function Chips(
         onTagsChange = () => {}
     }: {
         placeholder?: string,
+        // eslint-disable-next-line no-unused-vars
         onTagsChange?: (tags: string[]) => void
     }
 ) {

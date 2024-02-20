@@ -15,12 +15,12 @@ const useCardsService = () => {
                 method: 'GET',
             });
         },
-        get: (): Promise<any> => api(`cards/quizz`, {
+        get: (): Promise<Card[]> => api(`cards/quizz`, {
             method: 'GET',
         }),
         post: (body: CardUserData): Promise<Card> => api(`cards`, {
             method: 'POST',
-            body,
+            body: JSON.stringify(body),
         })
     };
 };
