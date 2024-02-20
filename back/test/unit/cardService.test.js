@@ -5,6 +5,8 @@ const Card = require('../../src/domain/entities/Card');
 const CardUserData = require('../../src/domain/entities/CardUserData');
 const Category = require("../../src/domain/entities/Category");
 const ServiceError = require("../../src/domain/services/errors/ServiceError");
+const crypto = require("crypto");
+const moment = require("moment");
 
 const generateCards = (amount) => {
     const cards = [];
@@ -16,7 +18,7 @@ const generateCards = (amount) => {
 
 describe('Card Service test', () => {
     beforeEach(() => {
-        jest.spyOn(storageConnector, "addCard").mockImplementation((card) => card);
+        jest.spyOn(storageConnector, "addCard").mockImplementation((card) => new Card(crypto.randomUUID(), card.question, card.answer, card.tag));
     });
 
     afterEach(() => {
@@ -100,5 +102,19 @@ describe('Card Service test', () => {
 
     it('create should throw an error', () => {
         expect(() => CardService.addCard('dummy data')).toThrowError(ServiceError);
+    });
+
+    it('answerCard should update category and lastAnsweredDate', () => {
+        const yesterday = moment().subtract(1, 'days').toDate();
+        const today = moment().toDate();
+
+        const card = new Card('1', 'How are you ?', 'I am fine', 'Test', Category.FIRST, yesterday);
+        jest.spyOn(storageConnector, "getCards").mockReturnValue([card]);
+
+        const updatedCard = CardService.answerCard(card, true);
+
+        expect(updatedCard).toBeInstanceOf(Card);
+        expect(updatedCard.category).toBe(Category.SECOND);
+        expect(updatedCard.lastAnsweredDate.getDate()).toBe(today.getDate());
     });
 });
