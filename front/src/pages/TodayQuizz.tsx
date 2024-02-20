@@ -3,6 +3,8 @@ import {FormEvent, useEffect, useState} from "react";
 import useCardsService from "../domain/services/useCardsService";
 import {Card} from "../domain/entities/Card.ts";
 
+/* eslint-disable react-hooks/exhaustive-deps */
+
 export default function TodayQuizz() {
     const cardsService = useCardsService();
     const [cards, setCards] = useState<Card[]>([]);
