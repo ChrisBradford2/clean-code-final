@@ -136,4 +136,32 @@ describe('Quizz Service test', () => {
         expect(cards).toHaveLength(5);
         expect(cards).toEqual(cardsExpected);
     });
+
+    it('should return empty array if category is DONE', function () {
+        const today = new Date('2021-01-02');
+        const yesterday = new Date('2021-01-01');
+
+        jest.spyOn(storageConnector, "getCards").mockReturnValue([
+            new Card('1', 'How are you ?', 'I am fine', null, Category.DONE, yesterday),
+        ]);
+
+        const cards = QuizzService.getQuizz(today);
+        expect(cards).toBeInstanceOf(Array);
+        expect(cards).toHaveLength(0);
+    });
+
+    it('should return cards of category FIRST but not of category DONE', function () {
+        const today = new Date('2021-01-02');
+        const yesterday = new Date('2021-01-01');
+
+        jest.spyOn(storageConnector, "getCards").mockReturnValue([
+            new Card('1', 'How are you ?', 'I am fine', null, Category.DONE, yesterday),
+            new Card('2', 'How are you ?', 'I am fine', null, Category.FIRST, yesterday),
+        ]);
+
+        const cards = QuizzService.getQuizz(today);
+        expect(cards).toBeInstanceOf(Array);
+        expect(cards).toHaveLength(1);
+    });
+
 });
