@@ -8,11 +8,6 @@ const useApi = () => {
         headers.set('Content-Type', type);
         headers.set('Accept', type);
 
-
-        if (options.body && typeof options.body !== 'string') {
-            options.body = JSON.stringify(options.body);
-        }
-
         const response = await fetch(`${baseUrl}/${url}`, {...options, headers});
         if (response.ok) {
             // check if it's a 204 response

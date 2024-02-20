@@ -1,5 +1,6 @@
 const CategoryFrequency = require('../entities/CategoryFrequency');
 const moment = require("moment");
+const Category = require('../entities/Category');
 
 class QuizzService {
     constructor({storageConnector}) {
@@ -14,6 +15,10 @@ class QuizzService {
     shouldIncludeCard(card, currentDate) {
         if (!card.lastAnsweredDate) {
             return true;
+        }
+
+        if (card.category === Category.DONE) {
+            return false;
         }
 
         const daysToAdd = CategoryFrequency[card.category];
