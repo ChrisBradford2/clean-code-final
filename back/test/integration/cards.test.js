@@ -49,6 +49,29 @@ describe('/cards test', () => {
         expect(response.body[0].tag).toBe('Test0');
     });
 
+    it('GET /quizz should return array with two cards', async () => {
+        const response = await request(app)
+            .get('/cards/quizz')
+            .set('content-type', 'application/json')
+            .send();
+
+        expect(response.status).toBe(200);
+        expect(response.body.length).toBe(2);
+        expect(response.body[0]).toHaveProperty('id');
+        expect(response.body[0]).toHaveProperty('category');
+        expect(response.body[0]).toHaveProperty('question');
+        expect(response.body[0]).toHaveProperty('answer');
+        expect(response.body[0]).toHaveProperty('tag');
+    });
+
+    it('GET /quizz should return array of cards corresponding to provided date', async () => {
+        //TODO : to be implemented
+    });
+
+    it('GET /quizz should return array of two cards because no provided date', async () => {
+        //TODO : to be implemented
+    });
+
     it('POST should return created card', async () => {
         const payload = {
             question: 'What is testing ?',
