@@ -88,15 +88,15 @@ describe('Quizz Service test', () => {
 
         const cardsExpected = [
             new Card('1', 'How are you ?', 'I am fine', null, Category.SECOND, twoDaysBefore),
-            new Card('1', 'How are you ?', 'I am fine', null, Category.SECOND, fiveDaysBefore),
-            new Card('2', 'How are you ?', 'I am fine', null, Category.FIRST, yesterday),
-            new Card('2', 'How are you ?', 'I am fine', null, Category.FIRST, twoDaysBefore),
+            new Card('2', 'How are you ?', 'I am fine', null, Category.SECOND, fiveDaysBefore),
+            new Card('3', 'How are you ?', 'I am fine', null, Category.FIRST, yesterday),
+            new Card('4', 'How are you ?', 'I am fine', null, Category.FIRST, twoDaysBefore),
         ];
 
         const cardsNotExpected = [
-            new Card('3', 'How are you ?', 'I am fine', null, Category.FIRST, today),
-            new Card('3', 'How are you ?', 'I am fine', null, Category.SECOND, today),
-            new Card('3', 'How are you ?', 'I am fine', null, Category.SECOND, yesterday),
+            new Card('11', 'How are you ?', 'I am fine', null, Category.FIRST, today),
+            new Card('12', 'How are you ?', 'I am fine', null, Category.SECOND, today),
+            new Card('13', 'How are you ?', 'I am fine', null, Category.SECOND, yesterday),
         ];
 
         jest.spyOn(storageConnector, "getCards").mockReturnValue([...cardsExpected, ...cardsNotExpected]);
@@ -104,6 +104,36 @@ describe('Quizz Service test', () => {
         const cards = QuizzService.getQuizz(today);
         expect(cards).toBeInstanceOf(Array);
         expect(cards).toHaveLength(4);
+        expect(cards).toEqual(cardsExpected);
+    });
+
+    it('should return cards of category FIFTH OR SECOND OR FIRST', () => {
+        const today = new Date('2021-01-02');
+        const twoDaysBefore = new Date('2020-12-31');
+        const fiveDaysBefore = new Date('2020-12-28');
+        const yesterday = new Date('2021-01-01');
+        const tenDaysBefore = new Date('2020-12-23');
+
+        const cardsExpected = [
+            new Card('1', 'How are you ?', 'I am fine', null, Category.FIFTH, tenDaysBefore),
+            new Card('2', 'How are you ?', 'I am fine', null, Category.FIFTH, fiveDaysBefore),
+            new Card('3', 'How are you ?', 'I am fine', null, Category.SECOND, twoDaysBefore),
+            new Card('4', 'How are you ?', 'I am fine', null, Category.FIRST, yesterday),
+            new Card('5', 'How are you ?', 'I am fine', null, Category.FIRST, tenDaysBefore),
+        ];
+
+        const cardsNotExpected = [
+            new Card('11', 'How are you ?', 'I am fine', null, Category.FIRST, today),
+            new Card('12', 'How are you ?', 'I am fine', null, Category.FIFTH, twoDaysBefore),
+            new Card('13', 'How are you ?', 'I am fine', null, Category.SECOND, today),
+            new Card('14', 'How are you ?', 'I am fine', null, Category.SECOND, yesterday),
+        ];
+
+        jest.spyOn(storageConnector, "getCards").mockReturnValue([...cardsExpected, ...cardsNotExpected]);
+
+        const cards = QuizzService.getQuizz(today);
+        expect(cards).toBeInstanceOf(Array);
+        expect(cards).toHaveLength(5);
         expect(cards).toEqual(cardsExpected);
     });
 });
